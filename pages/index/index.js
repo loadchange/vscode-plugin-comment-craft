@@ -25,7 +25,26 @@ Page({
                 userInfo: userInfo
             })
         })
+        this.onLaunch();
         this.clientProbe();
+    },
+    onLaunch: function () {
+        wx.login({
+            success: function (res) {
+                if (res.code) {
+                    console.log(res.code)
+
+                    wx.request({
+                        url: 'https://test.com/onLogin',
+                        data: {
+                            code: res.code
+                        }
+                    })
+                } else {
+                    console.log('获取用户登录态失败！' + res.errMsg)
+                }
+            }
+        });
     },
     clientProbe: function () {
         var that = this

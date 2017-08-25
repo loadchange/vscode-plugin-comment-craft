@@ -13,5 +13,4 @@
   <view class="remind">
     <button class="remind-btn{{isOpenRemind?' close':''}}" bindtap="switchRemind">{{!isOpenRemind ? '开启' : '关闭'}}可用提醒</button>
   </view>
-
 </view>
