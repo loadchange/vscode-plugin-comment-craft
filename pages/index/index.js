@@ -1,5 +1,3 @@
-//index.js
-//获取应用实例
 var app = getApp()
 Page({
     data: {
@@ -8,36 +6,69 @@ Page({
         lastOpenTime: '',
         userInfo: null
     },
-    //事件处理函数
-    bindViewTap: function () {
-        wx.navigateTo({
-            url: '../logs/logs'
-        })
-    },
-    onLoad: function () {
-        wx.setNavigationBarTitle({
-            title: '京证'
-        })
+    clientProbe: function () {
         var that = this
-        app.getUserInfo(function (userInfo) {
-            console.log(userInfo)
-            that.setData({
-                userInfo: userInfo
-            })
+        wx.request({
+            url: 'https://jingzheng.hstba.com/current-state.json',
+            success: function (res) {
+                if (!res.success) {
+                    return
+                }
+                that.setData({
+                    currentstate: res.currentstate
+                })
+                that.setData({
+                    lastOpenTime: res.lastOpenTime
+                })
+            }
         })
-        this.onLaunch();
-        this.clientProbe();
     },
-    onLaunch: function () {
+    getUserSwitchState: function (openid) {
+        var that = this
+        if (!openid) {
+            return
+        }
+        wx.request({
+            url: 'https://jingzheng.hstba.com/get-user-switch-state.json',
+            data: {
+                openid: openid
+            },
+            success: function (res) {
+                if (res.success) {
+                    that.setData({
+                        isOpenRemind: remind
+                    })
+                }
+            }
+        })
+    },
+    syncUserInfo: function (openid) {
+        var userInfo = this.data.userInfo;
+        userInfo.openid = openid;
+        this.setData({
+            userInfo: userInfo
+        })
+        wx.request({
+            url: 'https://jingzheng.hstba.com/sync-user-info.json',
+            method: 'POST',
+            data: userInfo
+        })
+        this.getUserSwitchState(openid)
+    },
+    login: function () {
+        var that = this
         wx.login({
             success: function (res) {
                 if (res.code) {
                     console.log(res.code)
-
                     wx.request({
-                        url: 'https://test.com/onLogin',
+                        url: 'https://jingzheng.hstba.com/login.json',
+                        method: 'POST',
                         data: {
                             code: res.code
+                        },
+                        success: function (loginRes) {
+                            that.syncUserInfo(loginRes.openid)
                         }
                     })
                 } else {
@@ -46,30 +77,39 @@ Page({
             }
         });
     },
-    clientProbe: function () {
+    init: function () {
+        wx.setNavigationBarTitle({
+            title: '京证'
+        });
+        this.clientProbe();
+        this.login();
+    },
+    onLoad: function () {
         var that = this
-        wx.request({
-            url: 'https://api.jinjingzheng.zhongchebaolian.com/enterbj/jsp/enterbj/addcartype.jsp',
-            header: {
-                'content-type': 'text/html'
-            },
-            success: function (res) {
-                if (res.statusCode === 200) {
-                    if (res.data.indexOf('排队人数过多') < 0) {
-                        that.setData({
-                            currentstate: 1
-                        })
-                    }
-                }
-                that.setData({
-                    lastOpenTime: '2017-08-24 20:21:35'
-                })
-            }
+        app.getUserInfo(function (userInfo) {
+            console.log(userInfo)
+            that.setData({
+                userInfo: userInfo
+            })
         })
+        this.init();
     },
     switchRemind: function () {
         this.setData({
             isOpenRemind: this.data.isOpenRemind ? 0 : 1
+        })
+    },
+    formSubmit: function (e) {
+        this.switchRemind();
+        var data = {
+            state: this.data.isOpenRemind,
+            formId: e.detail.formId,
+            openid: this.data.userInfo.openid
+        }
+        wx.request({
+            url: 'https://jingzheng.hstba.com/switch-remind.json',
+            method: 'POST',
+            data: data
         })
     }
 })

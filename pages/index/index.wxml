@@ -1,16 +1,20 @@
 <!--index.wxml-->
 <view class="container">
-  <view class="header">
-    <image src="http://wx3.sinaimg.cn/mw690/abf9e936ly1fiurukz1kzj20zk0qo7gl.jpg" class="head-img"></image>
-    <text class="title{{!currentstate?' close':''}}">进京证功能：{{currentstate ? '开启中' : '关闭中'}}</text>
-    <text class="last-open-time{{!currentstate && lastOpenTime ? ' show':''}}">上次开启时间：{{lastOpenTime}}</text>
-  </view>
-  <view  bindtap="bindViewTap" class="userinfo" wx:if="{{userInfo}}">
-    <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
-    <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-  </view>
-  <text class="switch">当前提醒功能：{{isOpenRemind ? '开启' : '关闭'}}</text>
-  <view class="remind">
-    <button class="remind-btn{{isOpenRemind?' close':''}}" bindtap="switchRemind">{{!isOpenRemind ? '开启' : '关闭'}}可用提醒</button>
-  </view>
+    <view class="header">
+        <image src="http://wx3.sinaimg.cn/mw690/abf9e936ly1fiurukz1kzj20zk0qo7gl.jpg" class="head-img"></image>
+        <text class="title{{!currentstate?' close':''}}">进京证功能：{{currentstate ? '开启中' : '关闭中'}}</text>
+        <text class="last-open-time{{!currentstate && lastOpenTime ? ' show':''}}">上次开启时间：{{lastOpenTime}}</text>
+    </view>
+    <view class="userinfo" wx:if="{{userInfo}}">
+        <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+        <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+    </view>
+    <text class="switch">当前提醒功能：{{isOpenRemind ? '开启' : '关闭'}}</text>
+    <form bindsubmit="formSubmit" report-submit="true">
+        <view class="remind">
+            <button formType="submit" class="remind-btn{{isOpenRemind?' close':''}}">{{!isOpenRemind ? '开启' :
+                '关闭'}}可用提醒
+            </button>
+        </view>
+    </form>
 </view>
