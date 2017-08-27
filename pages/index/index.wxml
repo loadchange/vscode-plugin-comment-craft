@@ -10,6 +10,7 @@
         <text class="userinfo-nickname">{{userInfo.nickName}}</text>
     </view>
     <text class="switch">当前提醒功能：{{isOpenRemind ? '开启' : '关闭'}}</text>
+    <text class="warning{{isOpenRemind ? ' show' : ''}}">注:每次开启提醒只提醒1次，如错过开放办证时间，请重新开启。</text>
     <form bindsubmit="formSubmit" report-submit="true">
         <view class="remind">
             <button formType="submit" class="remind-btn{{isOpenRemind?' close':''}}">{{!isOpenRemind ? '开启' :
@@ -17,4 +18,17 @@
             </button>
         </view>
     </form>
+    <view class="about">
+        <text class="about-title">关于小程序:京证</text>
+        <text class="about-paragraph">
+            　　北京交警app办理电子进京证的申请时间为提前一天，审核时间为0-17点，每天会不定时关闭，小程序的目的意为外地车主时时探测进京证功能的开放情况，在开放时间段收到通知，快速有效及时办理进京证。
+        </text>
+        <text class="about-paragraph">
+            　　点击＂开启可以提醒＂按钮，会在下一次系统探测到开放办证时间发出提醒，并关闭提醒功能，如果错过提醒，请重新开启。
+        </text>
+        <text class="about-paragraph">
+            如果在使用中遇到问题，请在此反馈：
+            github.com/LoadChange/jingzheng/issues
+        </text>
+    </view>
 </view>

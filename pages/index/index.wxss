@@ -4,6 +4,10 @@
     width: 100%;
 }
 
+.show {
+    display: block !important;
+}
+
 .head-img {
     display: block;
     width: 100%;
@@ -33,9 +37,11 @@
     font-size: 16px;
     color: #ff0000;
 }
-.show{
+
+.show {
     display: block;
 }
+
 .userinfo {
     display: flex;
     flex-direction: column;
@@ -43,9 +49,10 @@
 }
 
 .userinfo-avatar {
+    display: block;
     width: 60px;
     height: 60px;
-    margin: 20px;
+    margin: 10px;
     border-radius: 50%;
 }
 
@@ -59,11 +66,20 @@
     margin-top: 10px;
 }
 
+.warning {
+    display: none;
+    padding: 0 1em;
+    margin-top: 1em;
+    font-size: 12px;
+    line-height: 1.6;
+    color: #f00;
+}
+
 .remind-btn {
     display: block;
     padding: 0 1em;
     line-height: 30px;
-    margin: 50px auto 0;
+    margin: 20px auto 0;
     color: #f15a21;
     font-size: 12px;
     background: #fff;
@@ -74,4 +90,30 @@
 .remind-btn.close {
     color: #169fe6;
     border: 1px solid #169fe6;
+}
+
+.about {
+    width: 90%;
+    margin: 20px auto;
+    border: 1px solid #eee;
+    border-radius: 4px;
+}
+
+.about-title {
+    display: block;
+    padding-left: 1em;
+    width: 100%;
+    font-size: 13px;
+    line-height: 2.6;
+    color: #8d8d8d;
+    background: #f6f8f9;
+}
+
+.about-paragraph {
+    display: block;
+    padding: 0 8px;
+    font-size: 12px;
+    line-height: 1.8;
+    text-indent: 2em;
+    color: #6a737d;
 }
