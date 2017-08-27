@@ -101,6 +101,7 @@
 
 .about-title {
     display: block;
+    box-sizing: border-box;
     padding-left: 1em;
     width: 100%;
     font-size: 13px;
