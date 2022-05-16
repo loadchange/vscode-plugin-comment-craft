@@ -1,9 +1,10 @@
-import React from 'react'
-import { useWeb3React } from '@web3-react/core'
+import React from 'react';
+import { useWeb3React } from '@web3-react/core';
 
-import { useEagerConnect, useInactiveListener } from '../../hooks'
-import connectorList, { resetWalletConnectConnector } from '../../lib/connectors'
-import { Dropdown } from 'semantic-ui-react'
+import { useEagerConnect, useInactiveListener } from '../../hooks';
+import connectorList, { resetWalletConnectConnector } from '../../lib/connectors';
+import { Menu, Dropdown, Space, Button } from 'antd';
+import { DownOutlined, SmileOutlined } from '@ant-design/icons';
 
 const ConnectWallet = () => {
   const { activate, deactivate, active, error } = useWeb3React();
@@ -25,32 +26,51 @@ const ConnectWallet = () => {
     deactivate();
   };
 
+  function getMenu() {
+    const items = [];
+    if (active) {
+      items.push({
+        label: (
+          <Button type="link" onClick={handleDisconnect}>
+            Disconnect Wallet
+          </Button>
+        ),
+      });
+    } else {
+      if (!error) {
+        const list = [
+          <Button type="link" onClick={handleClick('MetaMask')}>
+            MetaMask
+          </Button>,
+          <Button type="link" onClick={handleClick('WalletConnect')}>
+            WalletConnect
+          </Button>,
+          <Button type="link" onClick={handleClick('WalletLink')}>
+            WalletLink
+          </Button>,
+        ];
+        list.forEach((label) => items.push({ label }));
+      } else {
+        items.push({
+          label: (
+            <Button type="link" onClick={handleRetry}>
+              Retry
+            </Button>
+          ),
+        });
+      }
+    }
+    return <Menu items={items} />;
+  }
+
   return (
-    <Dropdown text='Wallet' pointing className='link item'>
-
-
-      {(() => {
-        if (active) {
-          return <Dropdown.Menu>
-            <Dropdown.Item className="button-disconnect" onClick={handleDisconnect}>
-              Disconnect Wallet
-            </Dropdown.Item>
-          </Dropdown.Menu>
-        } else {
-          if (!error) {
-            return <Dropdown.Menu>
-              <Dropdown.Item onClick={handleClick('MetaMask')}>MetaMask</Dropdown.Item>
-              <Dropdown.Item onClick={handleClick('WalletConnect')}>WalletConnect</Dropdown.Item>
-              <Dropdown.Item onClick={handleClick('WalletLink')}>WalletLink</Dropdown.Item>
-            </Dropdown.Menu>
-          } else {
-            return <Dropdown.Menu>
-              <Dropdown.Item onClick={handleRetry}>Retry</Dropdown.Item>
-            </Dropdown.Menu>
-          }
-        }
-      })()}
-
+    <Dropdown overlay={getMenu()}>
+      <Button type="link">
+        <Space>
+          Wallet
+          <DownOutlined />
+        </Space>
+      </Button>
     </Dropdown>
   );
 };
