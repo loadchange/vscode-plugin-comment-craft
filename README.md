@@ -918,3 +918,15 @@ nft deployed to: 0x78c8361A5ed01dF1971525ff88Db5cb8Adf5caFd
 ```
 
 使用这些地址，在项目根部创建一个名为config.js的新文件，并添加以下代码，将占位符替换为CLI打印出的合约地址。
+
+
+### 孟买
+
+水龙头： https://faucet.polygon.technology/
+
+```
+npx hardhat run scripts/deploy.js --network mumbai
+
+nftMarket deployed to: 0x29e2560da810c61C1F29EBd16C0442C3eb0c12A1
+nft deployed to: 0x02E43f248807d54e76B45B2159880A1D42d77Ea1
+```

@@ -19,7 +19,7 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
  * @type import('hardhat/config').HardhatUserConfig
  */
 module.exports = {
-  defaultNetwork: "hardhat",
+  defaultNetwork: "localhost",
   networks: {
     localhost: {
       url: "http://172.23.48.1:8545",
@@ -29,7 +29,12 @@ module.exports = {
       chainId: 1337,
     },
     mumbai: {
-      url: "https://rpc-mumbai.matic.today",
+      url: "https://matic-mumbai.chainstacklabs.com",
+      accounts: [privateKey],
+      timeout: 40000,
+    },
+    matic: {
+      url: "https://rpc-mainnet.maticvigil.com",
       accounts: [privateKey],
     },
   },
