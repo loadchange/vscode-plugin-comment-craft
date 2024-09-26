@@ -1,33 +1,64 @@
 {
-  "name": "digital-marketplace",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+  "name": "vscode-plugin-comment-craft",
+  "displayName": "vscode-plugin-comment-craft",
+  "description": "CommentCraft: Elevate Your Code Comments",
+  "version": "0.0.1",
+  "icon": "images/icon.png",
+  "publisher": "loadchange",
+  "engines": {
+    "vscode": "^1.93.0"
   },
-  "dependencies": {
-    "@nomiclabs/hardhat-ethers": "^2.0.6",
-    "@nomiclabs/hardhat-waffle": "^2.0.3",
-    "@openzeppelin/contracts": "^4.6.0",
-    "axios": "^0.27.2",
-    "chai": "^4.3.6",
-    "ethereum-waffle": "^3.4.4",
-    "ethers": "^5.6.8",
-    "hardhat": "^2.9.6",
-    "ipfs-http-client": "^56.0.3",
-    "next": "12.1.6",
-    "react": "18.1.0",
-    "react-dom": "18.1.0",
-    "web3modal": "^1.9.7"
+  "categories": [
+    "Other"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "configuration": {
+      "title": "CommentCraft",
+      "properties": {
+        "commentcraft.enableTelemetry": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable telemetry for CommentCraft"
+        }
+      }
+    },
+    "languages": [
+      {
+        "id": "*",
+        "extensions": [
+          "*"
+        ]
+      }
+    ]
+  },
+  "activationEvents": [
+    "onStartupFinished",
+    "onLanguage:*"
+  ],
+  "scripts": {
+    "vscode:prepublish": "pnpm run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "pnpm run compile-tests && pnpm run compile && pnpm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
   },
   "devDependencies": {
-    "autoprefixer": "^10.4.7",
-    "eslint": "8.16.0",
-    "eslint-config-next": "12.1.6",
-    "postcss": "^8.4.14",
-    "tailwindcss": "^3.0.24"
+    "@types/mocha": "^10.0.7",
+    "@types/node": "20.x",
+    "@types/vscode": "^1.93.0",
+    "@typescript-eslint/eslint-plugin": "^8.3.0",
+    "@typescript-eslint/parser": "^8.3.0",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1",
+    "eslint": "^9.9.1",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.5.4",
+    "webpack": "^5.94.0",
+    "webpack-cli": "^5.1.4"
   }
 }
